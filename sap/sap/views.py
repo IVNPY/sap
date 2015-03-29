@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def login_page(request):
-    ''' vista login '''
+    ''' lanza la vista encargada del login '''
     message = None
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -26,10 +26,10 @@ def login_page(request):
     return render_to_response('login.html',{'message': message, 'form': form}, context_instance=RequestContext(request))  
 
 def homepage(request):
-    ''' vista pagina principal '''
+    ''' lanza la pagina principal '''
     return render_to_response('homepage.html', context_instance=RequestContext(request))
 
 def logout_page(request):
-    ''' cerrar sesion '''
+    ''' se encarga de cerrar la sesion '''
     logout(request)
     return login_page(request)
