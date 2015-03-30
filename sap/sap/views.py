@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def login_page(request):
-    ''' lanza la vista encargada del login '''
+    ''' Lanza la vista encargada del login '''
     message = None
     if request.method == "POST":
         form = LoginForm(request.POST)
