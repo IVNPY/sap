@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    'AdministrarUsuarios',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'sap.urls'
 WSGI_APPLICATION = 'sap.wsgi.application'
 
 TEMPLATE_DIRS = (
-    "/home/moco/Desktop/proyecto-is2-2015/sap/sap/templates",
+    "/home/ivan/Escritorio/proyecto-is2-2015/sap/sap/templates",
 )
 
 # Database
