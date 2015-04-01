@@ -1,0 +1,78 @@
+<div class="modal fade" id="modal-nuevo">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Nuevo Usuario</h4>
+			</div>
+			<form method="post" action="{% url 'usuarios:nuevo' %}" id="#form-nuevo" novalidate>
+				{% csrf_token %}
+				<div class="modal-body">
+					<center>
+						<div class="control-group">
+							<label>Username: </label><br>
+							<div class="controls">
+								<input type="text" name="username" placeholder="Username..." required data-validation-required-message="Por favor rellena este campo :)">
+								<p class="help-block"></p>
+							</div> 
+						</div> 
+						
+						<div class="control-group">
+							<label>Password: </label><br>
+							<div class="controls">
+								<input type="password" name="password" placeholder="Password..." required data-validation-required-message="Por favor rellena este campo :)">
+								<p class="help-block"></p>
+							</div>
+						</div> 
+						
+						<div class="control-group">
+							<label>Nombre: </label><br>
+							<div class="controls">
+								<input type="text" name="nombre" placeholder="Nombre..." required data-validation-required-message="Por favor rellena este campo :)"> 
+								<p class="help-block"></p>
+							</div>
+						</div> 
+						
+						<div class="control-group">
+							<label>Apellido: </label><br>
+							<div class="controls">
+								<input type="text" name="apellido" placeholder="Apellido..." required data-validation-required-message="Por favor rellena este campo :)">
+								<p class="help-block"></p>
+							</div> 
+						</div> 
+						
+						<div class="control-group">
+							<label>CI: </label><br>
+							<div class="controls">
+								<input type="number" name="ci" placeholder="Ci..." required data-validation-required-message="Por favor rellena este campo :)" data-validation-number-message="mmm la CI debe ser un numero">
+								<p class="help-block"></p>
+							</div> 
+						</div> 
+						
+						<div class="control-group">
+							<label>E-mail: </label><br>
+							<div class="controls">
+								<input type="email" name="email" placeholder="Email" required data-validation-required-message="Por favor rellena este campo :)" data-validation-email-message="eso no se ve como un e-mail valido ¬¬">
+								<p class="help-block"></p>
+							</div> 
+						</div> 
+						
+						<div class="control-group">
+							<label>Telefono: </label><br>
+							<div class="controls">
+								<input type="phone" name="telefono" placeholder="Telefono..." required data-validation-required-message="Por favor rellena este campo :)">
+								<p class="help-block"></p>
+							</div> 
+						</div> 
+						
+					
+					</center>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Guardar</button>
+				</div>
+			</form>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
