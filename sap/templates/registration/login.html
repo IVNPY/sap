@@ -1,0 +1,24 @@
+
+
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+
+{% block title %}<div align=center>Iniciar Sesi&oacute;n</div>{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <meta http-equiv="refresh" content="0; url={% url 'profile' %}" />
+    {% else %}
+        <div align=center>
+            <form method="post" action=""> {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Entrar" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+
+            <p>¿Olvid&oacute; su contrase&ntilde;a? <a href="{% url 'auth_password_reset' %}">Recup&eacute;rela</a>.</p>
+            <p>¿No tiene una cuenta? <a href="{% url 'registration_register' %}">Reg&iacute;strese</a>.</p>
+        </div>
+    {% endif %}
+{% endblock %}

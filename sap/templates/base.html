@@ -1,0 +1,44 @@
+{% load i18n %}
+{% load url from future %}
+<!doctype html>
+<html lang="es_AR">
+
+<head>
+    <title>Sistema Administrador de Proyectos</title>
+</head>
+
+<body>
+    <div align=right id="header">
+    {% block header %}
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}">Inicio</a> |
+    {% else %}
+        <a href="{% url 'about' %}">Acerca de SAP</a> |
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        Bienvenido {{ user.username }}
+        (<a href="{% url 'auth_logout' %}">Cerrar sesi&oacute;n</a> |
+        <a href="{% url 'auth_password_change' %}">Cambiar contrase&ntilde;a</a>)
+    {% else %}
+       <a href="{% url 'login' %}">Iniciar sesi&oacute;n</a>
+    {% endif %}
+    {% endblock %}
+    </div>
+
+    <div id="content">
+    <h1>{% block title %}{% endblock %}</h1>
+    {% block content %}
+
+    {% endblock content %}
+    </div>
+
+    <div id="footer">
+    {% block footer %}
+
+    {% endblock %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{% extends 'adm/adm_base_logged.html' %}
+{% load static %}
+{% block link %}<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">{% endblock %}
+{% block title %}SAP{% endblock %}
+{% block content %}
+    <div class="row">
+        <div id="breadcrumb" class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/home/">SAP</a></li>
+                <li><a href="/adm/">Administracion</a></li>
+                <li><a href="/adm/roles">Roles</a></li>
+                <li><a href="#">Lista de Roles</a></li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% for group in object_list %}
+            <li>
+                <h4>{{ group.name}}  :
+                    <a href="{% url "group_edit" group.id %}">Modificar</a>
+                    <a href="{% url "group_delete" group.id %}">Eliminar</a>
+                </h4>
+            </li>
+        {% endfor %}
+    </div>
+{% endblock %}

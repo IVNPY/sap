@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fpg-y@0#ix6z&9ez6*%$qy040$%k%p6cfe^uj8nekki_fa#56$'
+SECRET_KEY = '*_a%o5v(@$#&$d6ku1m)2cmaq+s^*86a6^3_+pym*(yn!r8pt)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -30,17 +30,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
+#    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admindocs',
+    'apps.registration',
+    'apps.admin',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -53,9 +55,6 @@ ROOT_URLCONF = 'sap.urls'
 
 WSGI_APPLICATION = 'sap.wsgi.application'
 
-TEMPLATE_DIRS = (
-    "/home/moco/Desktop/proyecto-is2-2015/sap/sap/templates",
-)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -70,7 +69,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'es-es'
+LANGUAGE_CODE = 'es-AR'
 
 TIME_ZONE = 'UTC'
 
@@ -86,6 +85,26 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+TEMPLATE_DIRS = (
+    "/home/moco/Desktop/nuevo/sap/templates",
+
+)
 
 
 
+
+if DEBUG:
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+    EMAIL_HOST_USER = ''
+    EMAIL_HOST_PASSWORD = ''
+    EMAIL_USE_TLS = False
+    DEFAULT_FROM_EMAIL = 'testing@example.com'
+
+
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_EMAIL_SUBJECT_PREFIX = '[Django Registration Test App]'
+SEND_ACTIVATION_EMAIL = True
+REGISTRATION_AUTO_LOGIN = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<p>La activaci&oacute;n de la cuenta ha fallado</p>
+{% endblock %}
+
+
+{% comment %}
+**registration/activate.html**
+
+Used if account activation fails. With the default setup, has the following context:
+
+``activation_key``
+    The activation key used during the activation attempt.
+{% endcomment %}

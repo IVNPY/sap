@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Crear Rol{% endblock %}
+{% block content %}
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% if registered %}
+        <strong>El rol se ha creado satisfactoriamente...</strong><br/>
+        {% else %}
+
+            <form class="form_class" id="form_class" method="post" action=""
+                    enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+                {{ group_form.as_p }}
+                <!-- Provide a button to click to submit the form. -->
+                <input class="btn btn-primary" type="submit" name="submit" value="Crear" />
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

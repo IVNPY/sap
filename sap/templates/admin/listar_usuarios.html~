@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}<div align=center>Usuarios<div>{% endblock %}
+{% block link %} 
+<a href="{% url 'profile' %}">Inicio</a> / 
+Usuarios
+
+{% endblock%}
+{% block content %}
+<div align=center>
+    <a href="{% url 'crear_usuario' %}">Crear un nuevo usuario</a>
+    <table class="table table-striped">
+        <tr>
+            <th>Usuario</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Email</th>
+            <th colspan="2">Acciones</th>
+        </tr>
+
+        {% for usuario in object_list %}
+        <tr>
+            <td><a href="{% url 'usuario_detalle' usuario.pk %}">{{ usuario.username }}</a></td>
+            <td>{{ usuario.first_name }}</td>
+            <td>{{ usuario.last_name }}</td>
+            <td>{{ usuario.email }}</td>
+            <td><a href="{% url 'modificar_usuario' usuario.pk %}"> Modificar</a></td>
+            <td><a href="{% url 'eliminar_usuario' usuario.pk %}"> Eliminar</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
+

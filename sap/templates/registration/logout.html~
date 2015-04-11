@@ -1,0 +1,8 @@
+{% extends "registration/registration_base.html" %}
+{% load i18n %}
+
+{% block title %}Cerrar sesi&oacute;n{% endblock %}
+
+{% block content %}
+<p>Ha cerrado su sesi&oacute;, vuelva pronto.</p>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}Perfil del usuario{% endblock %}
+
+{% block content %}
+    <hi> Sistema </h>
+    <p><a href="{% url 'listar_rol' %}">Roles</a></p>
+    <p><a href="{% url 'listar_usuario' %}">Usuarios</a></p>
+
+{% endblock %}
