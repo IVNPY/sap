@@ -22,7 +22,7 @@
         (<a href="{% url 'auth_logout' %}">Cerrar sesi&oacute;n</a> |
         <a href="{% url 'auth_password_change' %}">Cambiar contrase&ntilde;a</a>)
     {% else %}
-       <a href="{% url 'auth_login' %}">Iniciar sesi&oacute;n</a>
+       <a href="{% url 'login' %}">Iniciar sesi&oacute;n</a>
     {% endif %}
     {% endblock %}
     </div>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Asignar Rol de Sistema{% endblock %}
+
+{% block breadcrumb %}
+    <p><a href="{% url 'profile' %}">Inicio</a> / 
+    <a href="{% url 'listar_usuario_asignar_rol_sistema' %}">Asignar Roles de Sistema</a> /
+    Usuario</p>
+{% endblock %}
+
+{% block content %}
+    {% if not perms.adm.asignar_rol_sistema %}
+        <meta http-equiv="refresh" content="0; url={% url 'profile' %}" />
+    {% else %}
+        <div align=center>
+            <form method="post">{% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Aceptar" />
+                <input type="button" onclick=" location.href='{% url 'listar_usuario_asignar_rol_sistema' %}' " value="Cancelar">
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+

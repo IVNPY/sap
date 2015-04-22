@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Modificar usuario {% endblock %}
+
+{% block breadcrumb %} 
+    <p><a href="{% url 'profile' %}">Inicio</a> / 
+    <a href="{% url 'listar_usuario' %}">Usuarios</a> /
+    Modificar usuario</p>
+{% endblock %}
+
+{% block content %}
+    {% if not perms.adm.permisossistema.modificar_usuario %}
+        <meta http-equiv="refresh" content="0; url={% url 'profile' %}" />
+    {% else %}
+        <form method="post" action="{{ action }}"> {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Aceptar">
+            <input type="button" onclick=" location.href='{% url 'listar_usuario' %}' " value="Cancelar">
+        </form>
+    {% endif %}
+{% endblock %}

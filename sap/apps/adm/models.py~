@@ -1,0 +1,8 @@
+from django.db import models
+
+class mispermisos(models.Model):
+    class Meta:
+        permissions = (
+            ("asignar_rol", "Asignar rol a un usuario"),
+        )
+

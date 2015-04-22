@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}Perfil del usuario{% endblock %}
+{% block title %}<div align=center>Perfil del usuario</div>{% endblock %}
 
 {% block content %}
     <hi> Sistema </h>

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Rol{% endblock %}
+
+{% block breadcrumb %}
+    <p><a href="{% url 'profile' %}">Inicio</a> / 
+    <a href="{% url 'listar_rol' %}">Roles</a> /
+    Eliminar rol</p>
+{% endblock %}
+
+{% block content %}
+    {% if not perms.adm.permisossistema.eliminar_rol %}
+        <meta http-equiv="refresh" content="0; url={% url 'profile' %}" />
+    {% else %}
+        <div align=center>
+            <form method="post">{% csrf_token %}
+                <p>¿Esta seguro que quieres eliminar el rol "{{ object }}"?</p>
+                <input type="submit" value="Aceptar" />
+                <input type="button" onclick=" location.href='{% url 'listar_rol' %}' " value="Cancelar">
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+

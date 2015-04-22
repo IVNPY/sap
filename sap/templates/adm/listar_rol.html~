@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}<div align=center> Roles de Sistema </div>{% endblock %}
+
+{% block breadcrumb %} 
+    <p><a href="{% url 'profile' %}">Inicio</a> / Roles</p>
+{% endblock %}
+
+{% block content %}
+    <div align=center>
+        {% if perms.adm.permisossistema.crear_rol %}
+            <a href="{% url 'crear_rol' %}">Crear un nuevo rol</a>
+        {% endif %}
+        <table>
+            <tr>
+                <th>Rol</th>
+                <th colspan="2">Acciones</th>
+            </tr>
+
+            {% for group in object_list %}
+            <tr>
+                <td><a href="{% url 'rol_detalle' group.id %}"> {{ group.name}} </a></td>
+
+                {% if perms.adm.permisossistema.modificar_rol %}
+                    <td><a href="{% url 'modificar_rol' group.id %}"> Modificar</a></td>
+                {% else%}
+                    <td> - </td>
+                {% endif %}
+
+                {% if perms.adm.permisossistema.eliminar_rol %}
+                    <td><a href="{% url 'eliminar_rol' group.id %}"> Eliminar</a></td>
+                {% else %}
+                    <td> - </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+    <input type="button" onclick=" location.href='{% url 'profile' %}' " value="Atras">
+{% endblock %}
+

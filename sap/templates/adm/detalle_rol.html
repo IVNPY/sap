@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Detalle del Rol {% endblock %}
+
+{% block breadcrumb %} 
+    <p><a href="{% url 'profile' %}">Inicio</a> / 
+    <a href="{% url 'listar_rol' %}">Roles</a> /
+    {{ rol.name }}</p>
+{% endblock %}
+
+{% block content %}
+    <p>Nombre: {{ rol.name }}</p>
+    <p>Permisos:</p> 
+    <p>{{ rol.permissions.select_related }}</p>
+    <input type="button" onclick=" location.href='{% url 'listar_rol' %}' " value="Atras">
+{% endblock %}
+

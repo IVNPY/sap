@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}<div align=center>Asignar Roles de Sistema<div>{% endblock %}
+
+{% block breadcrumb %}
+    <p><a href="{% url 'profile' %}">Inicio</a> / Asignar Roles de Sistema</p>
+{% endblock %}
+
+{% block content %}
+    {% if not perms.adm.asignar_rol_sistema %}
+        <meta http-equiv="refresh" content="0; url={% url 'profile' %}" />
+    {% else %}
+        <div align=center>
+            <form class="navbar-form navbar-right" action="{% url 'listar_usuario_asignar_rol_sistema' %}" method="get"> {% csrf_token %}
+                <input name="busqueda" class="form-control" placeholder="Buscar" type="text">                                                 
+            </form>
+            <table class="table table-striped">
+                <tr>
+                    <th>Usuario</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+                {% for usuario in object_list %}
+                <tr>
+                    <td>{{ usuario.username }}</td>
+                    <td>{{ usuario.first_name }}</td>
+                    <td>{{ usuario.last_name }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td><a href="{% url 'asignar_rol_sistema' usuario.pk %}"> Asignar Roles de Sistema</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <input type="button" onclick=" location.href='{% url 'profile' %}' " value="Atras">
+    {% endif %}
+{% endblock %}

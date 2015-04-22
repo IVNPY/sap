@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar usuario{% endblock %}
+
+{% block breadcrumb %} 
+    <p><a href="{% url 'profile' %}">Inicio</a> / 
+    <a href="{% url 'listar_usuario' %}">Usuarios</a> /
+    Eliminar usuario</p>
+{% endblock %}
+
+{% block content %}
+    {% if not perms.adm.permisossistema.eliminar_usuario %}
+        <meta http-equiv="refresh" content="0; url={% url 'profile' %}" />
+    {% else %}
+        <div align=center>
+            <form method="post" action="{{ action }}"> {% csrf_token %}
+                <p>¿Está seguro que desea eliminar el usuario "{{ object }}" ?</p>
+                <input type="submit" value="Aceptar">
+                <input type="button" onclick=" location.href='{% url 'listar_usuario' %}' " value="Cancelar">
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+

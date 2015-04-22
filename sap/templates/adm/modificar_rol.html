@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} Modificar rol {% endblock %}
+
+{% block breadcrumb %} 
+    <p><a href="{% url 'profile' %}">Inicio</a> / 
+    <a href="{% url 'listar_rol' %}">Roles</a> /
+    Modificar rol</p>
+{% endblock %}
+
+{% block content %}
+    {% if not perms.adm.modificar_rol_sistema %}
+        <meta http-equiv="refresh" content="0; url={% url 'profile' %}" />
+    {% else %}
+        <form method="post">{% csrf_token %}
+            {{ groupform.as_p }}
+            <input type="submit" value="Aceptar">
+            <input type="button" onclick=" location.href='{% url 'listar_rol' %}' " value="Cancelar">
+        </form>
+    {% endif %}
+{% endblock %}

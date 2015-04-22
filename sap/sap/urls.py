@@ -5,55 +5,40 @@ from django.views.generic import TemplateView
 from apps.registration.backends.default.views import ActivationView
 from apps.registration.backends.default.views import RegistrationView
 
-#para el abm de usuarios
-#from apps.admin.views import CrearUsuarioView
-#from apps.admin.views import ListarUsuarioView
-#from apps.admin.views import EliminarUsuarioView
-#from apps.admin.views import ModificarUsuarioView
-#from apps.admin.views import consultarUsuario
-#from apps.admin.views import AsignarRolesSistema
+#para el abm de usuarios y roles
+from apps.adm.views import *
 
-#para el abm de roles
-#from apps.admin.views import crearRol
-#from apps.admin.views import modificarRol
-#from apps.admin.views import eliminarRol
-#from apps.admin.views import listarRol
-#from apps.admin.views import consultarRol
+from django.contrib import admin
 
-from apps.admin.views import *
+admin.autodiscover ()
 
 urlpatterns = patterns('',
 
+    #documentacion
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Descomenta la suiguiente linea para habilitar el admin:
+    url(r'^admin/', include(admin.site.urls)),
     #Pagina acerca de SAP
     url(r'^about/',
         TemplateView.as_view(template_name='about.html'),
         name='about'),
 
     #Administracion de usuarios
-    url(r'^users$', ListarUsuarioView.as_view(), name='listar_usuario'),
+    url(r'^users$', login_required(ListarUsuarioView.as_view()), name='listar_usuario'),
     url(r'^users/create$', CrearUsuarioView.as_view(), name='crear_usuario'),
-    url(r'^users/delete/(?P<pk>\d+)$',EliminarUsuarioView.as_view(), name='eliminar_usuario'),
-    url(r'^users/edit/(?P<pk>\d+)$',ModificarUsuarioView.as_view(), name='modificar_usuario'),
+    url(r'^users/delete/(?P<pk>\d+)$',login_required(EliminarUsuarioView.as_view()), name='eliminar_usuario'),
+    url(r'^users/edit/(?P<pk>\d+)$',login_required(ModificarUsuarioView.as_view()), name='modificar_usuario'),
     url(r'^users/(?P<pk>\d+)$',consultarUsuario, name='usuario_detalle'),
-    url(r'^users/groups/(?P<pk>\d+)$',AsignarRolesSistema.as_view(), name='usuario_editaroles'),
 
     #Administracion de roles
-    url(r'^group/$', listarRol, name='listar_rol'),
-    url(r'^group/create/$', crearRol, name='crear_rol'),
-    url(r'^group/delete/(?P<pk>\d+)$', eliminarRol, name='eliminar_rol'),
-    url(r'^group/edit/(?P<pk>\d+)$', modificarRol, name='modificar_rol'),
-    url(r'^group/(?P<pk>\d+)$',consultarRol, name='rol_detalle'),
-
-#    url(r'^rol/crear/$', CrearRolView.as_view(), name='crear_rol'),
-#    url(r'^rol/editar/(?P<pk>\d+)$', EditaRolPermisosView.as_view(), name='rol_permisos_edita'),
-#    url(r'^rol/lista/$', ListaRolPermisosView.as_view(), name='rol_permisos_lista'),
-#    url(r'^rol/eliminar/(?P<pk>\d+)/$', EliminaRolPermisosView.as_view(), name='rol_permisos_elimina'),
-#    url(r'^rol/asignar/$', AsignaRolProyectoView.as_view(), name='rol_proyecto_crear'),
-#    url(r'^rol/listaasignados/$', ListaRolProyectoView.as_view(), name='rol_proyecto_listar'),
-#    url(r'^rol/listaasignados/(?P<idrolproyecto>\d+)$', ListaRolProyectoView.as_view(), name='rol_proyecto_fase'),
-    
-
-
+    url(r'^groups/$', login_required(ListarRolView.as_view()), name='listar_rol'),
+    url(r'^groups/create/$', crearRol, name='crear_rol'),
+    url(r'^groups/delete/(?P<pk>\d+)$', eliminarRol, name='eliminar_rol'),
+    url(r'^groups/edit/(?P<pk>\d+)$', modificarRol, name='modificar_rol'),
+    url(r'^groups/(?P<pk>\d+)$',consultarRol, name='rol_detalle'),
+    url(r'^groups/users$',login_required(ListarUsuariosAsignarRolSistemaView.as_view()), name='listar_usuario_asignar_rol_sistema'),
+    url(r'^groups/users/(?P<pk>\d+)$',login_required(AsignarRolesSistema.as_view()), name='asignar_rol_sistema'),
     url(r'^accounts/', include('apps.registration.backends.default.urls')),
 
     #Perfil del usuario

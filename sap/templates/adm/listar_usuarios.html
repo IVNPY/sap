@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}<div align=center>Usuarios<div>{% endblock %}
+
+{% block breadcrumb %}
+    <p><a href="{% url 'profile' %}">Inicio</a> / Usuarios</p>
+{% endblock %}
+
+{% block content %}
+    <div align=center>
+        <form class="navbar-form navbar-right" action="{% url 'listar_usuario' %}" method="get"> {% csrf_token %}
+            <input name="busqueda" class="form-control" placeholder="Buscar" type="text">                                                 
+        </form>
+        {% if perms.adm.crear_usuario %}
+            <a href="{% url 'crear_usuario' %}">Crear un nuevo usuario</a>
+        {% endif %}
+        <table class="table table-striped">
+            <tr>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th colspan="2">Acciones</th>
+            </tr>
+            {% for usuario in object_list %}
+            <tr>
+                <td><a href="{% url 'usuario_detalle' usuario.pk %}">{{ usuario.username }}</a></td>
+                <td>{{ usuario.first_name }}</td>
+                <td>{{ usuario.last_name }}</td>
+                <td>{{ usuario.email }}</td>
+
+                {% if perms.adm.modificar_usuario and usuario.pk != user.pk and not usuario.is_superuser %}
+                    <td><a href="{% url 'modificar_usuario' usuario.pk %}"> Modificar</a></td>
+                {% else %}
+                    <td> - </td>
+                {% endif %}
+
+
+                {% if perms.adm.eliminar_usuario and usuario.pk != user.pk and not usuario.is_superuser %}
+                    <td><a href="{% url 'eliminar_usuario' usuario.pk %}"> Eliminar</a></td>
+                {% else %}
+                    <td> - </td>
+                {% endif %}
+
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <input type="button" onclick=" location.href='{% url 'profile' %}' " value="Atras">
+{% endblock %}
+
