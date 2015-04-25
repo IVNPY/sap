@@ -20,7 +20,7 @@ from django.db.models import Q
 from datetime import date
 
 from apps.adm.forms import *
-
+from apps.adm.models import *
 from apps.adm.utils import *
 
 class CrearUsuarioView(CreateView):
@@ -248,3 +248,107 @@ class AsignarRolesSistema(UpdateView):
         context['idgrupo'] = self.kwargs['pk']
         return context
 
+#Para User Story
+
+
+class ListarUserStoryView(ListView):
+    """
+
+    Lista todos los user stories o el resultado de una busqueda.
+    La busqueda se realiza por el nombre del user story
+
+    """
+    model = UserStory
+    template_name = 'adm/listar_user_story.html'
+
+    def get_queryset(self):
+        busqueda = self.request.GET.get('busqueda','')
+        if (busqueda != ''):
+            object_list = self.model.objects.filter(nombre__icontains=busqueda)
+            if object_list.count > 1:
+                messages.info(self.request, 'Resultados con : ' + busqueda)
+        else:
+            object_list = self.model.objects.all()
+        return object_list
+
+    def get_context_data(self, **kwargs):
+        context = ListView.get_context_data(self, **kwargs)
+        return context
+
+@login_required
+def crearUserStory(request):
+    """
+    Funcion para crear un user story.
+    Retorna la página con el formulario correspondiente para la creación
+    del user story.
+    """
+    context = RequestContext(request)
+    if request.method == 'POST':
+        group_form = UserStoryForm(data=request.POST)
+        if group_form.is_valid():
+            group = group_form.save()
+            group.save()
+            return redirect('listar_user_story')
+        else:
+            print group_form.errors
+    else:
+        group_form = UserStoryForm()
+
+    return render_to_response('adm/crear_user_story.html', {'group_form': group_form}, context)
+
+
+class ModificarUserStoryView(UpdateView):
+    """
+    Permite modificar los atributos del User Story
+    """
+    model = UserStory
+    form_class = UserStoryEditForm
+    template_name = 'adm/modificar_user_story.html'
+    templ_base_error = None
+    next = 'listar_user_story'
+
+    def get_success_url(self):
+        return reverse(self.next)
+
+    def form_invalid(self, form):
+        self.templ_base_error = "__panel.html"
+        return UpdateView.form_invalid(self, form)
+
+    def get_context_data(self, **kwargs):
+        context = UpdateView.get_context_data(self, **kwargs)
+        context['action'] = reverse('modificar_user_story',kwargs={'pk':self.kwargs['pk']})
+        if self.templ_base_error:
+            context['nodefault'] = self.templ_base_error
+        return context
+
+
+
+@login_required
+def eliminarUserStory(request, pk):
+    """Funcion para Eliminar un rol.
+
+    :param request: Parametro a ser procesado.
+    :param pk: Parametro a ser procesado el identificador del rol que va a eliminarse.
+    :type request: HttpRequest.
+    :type pk: int.
+    :returns: La pagina correspondiente.
+    :rtype: El response correspondiente.
+    """
+    context = RequestContext(request)
+    user_story = get_object_or_404(UserStory, pk=pk)
+    if request.method == 'POST':
+        user_story.delete()
+        return redirect('listar_user_story')
+
+    return render_to_response('adm/eliminar_user_story.html', {'object':user_story}, context)
+
+
+
+@login_required
+def consultarUserStory(request, pk):
+
+    context = RequestContext(request)
+    user_story = get_list_or_404(UserStory, pk=pk)
+    context_dict = {'user_story': user_story}
+
+    return render_to_response('adm/detalle_user_story.html', context_dict, context)

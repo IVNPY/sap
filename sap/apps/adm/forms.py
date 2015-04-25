@@ -9,6 +9,8 @@ from django.forms import ModelMultipleChoiceField
 from django.contrib.auth.models import Permission
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
+from apps.adm.models import *
+from apps.adm.utils import *
 
 def get_permisos_sistema():
     perms = Permission.objects.all()
@@ -51,40 +53,60 @@ class UserForm(ModelForm):
         model = User
         fields = ['username','password','email','first_name','last_name' ]
         widgets = {'password':PasswordInput()}
-        
+
         labels = {
             'username': 'Usuario',
             'password ':'Contrasenha',
             'email' : 'Email',
             'first_name' : 'Nombre' ,
-            'last_name' : 'Apellido' 
+            'last_name' : 'Apellido' ,
+            #'domicilio' : 'Domicilio',
+            #'fechaNac' : 'Fecha de Nacimiento',
+            #'telefono': 'Telefono',
+            #'roles': 'Roles',
+            'cliente':'Cliente'
         }
         help_texts = {
             'username': '',
             'password ':'',
             'email' : '',
             'first_name' : '' ,
-            'last_name' : '' 
+            'last_name' : '' ,
+            #'domicilio' : '',
+            #'fechaNac' : '',
+            #'telefono': '',
+            #'roles': '',
+            #'cliente':''
         }
 
 class UserEditForm(ModelForm):
-    class Meta:
+     class Meta:
         model = User
         fields = ['username','email','first_name','last_name' ]
-        
+
         labels = {
             'username': 'Usuario',
             'email' : 'Email',
             'first_name' : 'Nombre' ,
-            'last_name' : 'Apellido' 
+            'last_name' : 'Apellido',
+           # 'domicilio' : 'Domicilio',
+            #'fechaNac' : 'Fecha de Nacimiento',
+            #'telefono': 'Telefono',
+           # 'roles': 'Roles',
+            #'cliente':'Cliente'
         }
         help_texts = {
             'username': '',
             'email' : '',
             'first_name' : '' ,
-            'last_name' : '' 
-        }
-    def __init__(self, *args, **kwargs):
+            'last_name' : '' ,
+            #'domicilio' : '',
+           # 'fechaNac' : '',
+           #  'telefono': '',
+           # 'roles': '',
+           # 'cliente':''
+       }
+     def __init__(self, *args, **kwargs):
         super(UserEditForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk:
@@ -106,4 +128,79 @@ class UsuarioRolForm(ModelForm):
         help_texts = {
             'groups':''
         }
+
+class UserStoryForm(ModelForm):
+    class Meta:
+        model = UserStory
+        fields = ['nombre','descripcion','detalle','valNegocio','valTecnico','usuario','prioridad','horasAcumuladas',
+                  'estimacion']
+
+
+        labels = {
+            'nombre': 'Nombre',
+            'descripcion ':'Descripcion',
+            'detalle' : 'Detalle',
+            #'sprint' : 'Sprint' ,
+            'valNegocio' : 'Valor para el negocio',
+            'valTecnico': 'Valor Tecnico',
+            'usuario':'Usuario',
+            'prioridad':'Prioridad',
+            'horasAcumuladas':'Horas Acumuladas'
+        }
+        help_texts = {
+            'nombre': '',
+            'descripcion':'',
+            'detalle' : '',
+           # 'sprint' : '' ,
+            'valNegocio' : '',
+            'valTecnico' :'',
+            'usuario':'',
+            'prioridad':'',
+            'horasAcumuladas':'',
+            'estimacion':'',
+            #'flujo':'',
+
+
+        }
+
+class UserStoryEditForm(ModelForm):
+    class Meta:
+        model = UserStory
+        fields = ['nombre','descripcion','detalle','valNegocio','valTecnico','usuario','prioridad','horasAcumuladas',
+                  'estimacion']
+
+
+        labels = {
+            'nombre': 'Nombre',
+            'descripcion ':'Descripcion',
+            'detalle' : 'Detalle',
+            #'sprint' : 'Sprint' ,
+            'valNegocio' : 'Valor para el negocio',
+            'valTecnico': 'Valor Tecnico',
+            'usuario':'Usuario',
+            'prioridad':'Prioridad',
+            'horasAcumuladas':'Horas Acumuladas'
+        }
+        help_texts = {
+            'nombre': '',
+            'descripcion':'',
+            'detalle' : '',
+            #'sprint' : '' ,
+            'valNegocio' : '',
+            'valTecnico' :'',
+            'usuario':'',
+            'prioridad':'',
+            'horasAcumuladas':'',
+            'estimacion':'',
+            #'flujo':'',
+
+
+        }
+
+        def __init__(self, *args, **kwargs):
+            super(UserStoryEditForm, self).__init__(*args, **kwargs)
+            instance = getattr(self, 'instance', None)
+            if instance and instance.pk:
+                self.fields['usuario'].widget.attrs['readonly'] = True
+
 

@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group, Permission
-#from apps.adm.models import Proyecto, Fase, Comite
+from apps.adm.models import UserStory, Proyecto
 
 
 #def get_project_list():
@@ -13,6 +13,16 @@ def get_group_list():
 
     group_list = Group.objects.all().order_by('id')
     return group_list
+
+
+
+def get_user_story_list():
+
+    group_list = UserStory.objects.all().order_by('id')
+    return group_list
+
+
+
 
 """
 def get_category_list(max_results=0, starts_with=''):

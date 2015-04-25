@@ -7,7 +7,7 @@ from apps.registration.backends.default.views import RegistrationView
 
 #para el abm de usuarios y roles
 from apps.adm.views import *
-
+from apps.adm.models import *
 from django.contrib import admin
 
 admin.autodiscover ()
@@ -40,6 +40,20 @@ urlpatterns = patterns('',
     url(r'^groups/users$',login_required(ListarUsuariosAsignarRolSistemaView.as_view()), name='listar_usuario_asignar_rol_sistema'),
     url(r'^groups/users/(?P<pk>\d+)$',login_required(AsignarRolesSistema.as_view()), name='asignar_rol_sistema'),
     url(r'^accounts/', include('apps.registration.backends.default.urls')),
+
+
+    #Administracion de user stories
+    url(r'^user_story/$', login_required(ListarUserStoryView.as_view()), name='listar_user_story'),
+    url(r'^user_story/create/$', crearUserStory, name='crear_user_story'),
+    url(r'^user_story/delete/(?P<pk>\d+)$', eliminarUserStory, name='eliminar_user_story'),
+    url(r'^user_story/edit/(?P<pk>\d+)$', login_required(ModificarUserStoryView.as_view()), name='modificar_user_story'),
+    url(r'^user_story/(?P<pk>\d+)$',consultarUserStory, name='user_story_detalle'),
+
+
+
+
+
+
 
     #Perfil del usuario
     url(r'^accounts/profile/',
